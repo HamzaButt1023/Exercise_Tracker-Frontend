@@ -1,0 +1,9 @@
+.carousel-indicators{
+    background-color: transparent;
+}
+.carousel-indicators [data-bs-target]{
+    height: 20px !important;
+}
+.carousel-indicators .active{
+    background-color: #F15A24 !important;
+}
