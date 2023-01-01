@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SidebarUi, fitprismLogo } from './Customize';
-import { Link } from 'react-router-dom';
+import { Link , useLocation } from 'react-router-dom';
 
 import logo from '../assets/icons/logo_sidebar.svg';
 import listicon from '../assets/icons/list.svg';
@@ -20,30 +20,27 @@ export default function Sidebar_left() {
   // active-link
   const [menuitem, setMenuItem] = useState([
     {
-      id: 1,
+      id: 0,
       name: "activity list",
       to: "/home",
-      className: "text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center active-link",
+      className: `text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center `,
       icon: listicon,
     },
     {
-      id: 2,
+      id: 1,
       name: "Add activity",
       to: "/add-activity",
-      className: "text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center",
+      className: `text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center`,
       icon: activity,
     }
   ]);
+  
 
+  const [menuIndex, setMenuIndex] = useState(0);
   const itemActive = (id) => {
-    setMenuItem(menuitem.map((item) => {
-      if (item.id === id) {
-        return { ...item, className: 'text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center active-link' }
-      } else {
-        return { ...item, className: 'text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center' }
-      }
-    }))
+    setMenuIndex(id);
   }
+  useEffect(() => {}, [menuIndex])
 
   return (
     <React.Fragment>
@@ -65,9 +62,9 @@ export default function Sidebar_left() {
 
           <nav className='mt-5 d-flex flex-column customize-nav'>
             {
-              menuitem.map((navitem) => {
+              menuitem.map((navitem, index) => {
                 return (
-                  <Link key={navitem.id} onClick={() => itemActive(navitem.id)} to={navitem.to} className={navitem.className}><img style={sideBarIcon} src={navitem.icon} /><span>{navitem.name}</span></Link>
+                  <Link key={index} onClick={e => setMenuIndex(index)} to={navitem.to} className={navitem.className}><img style={sideBarIcon} src={navitem.icon} /><span>{navitem.name}</span></Link>
                 )
               })
             }

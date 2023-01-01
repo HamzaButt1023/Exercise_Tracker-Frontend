@@ -1,7 +1,5 @@
-import React from 'react'
-import { useParams } from "react-router-dom";
-
-
+import React, { useEffect, useState } from 'react'
+import { useParams, useNavigate } from "react-router-dom";
 import Menubar from './Menubar';
 import Sidebar_left from './Sidebar_left';
 import { CustomizeUi, globalFieldRules, newActivity } from './Customize';
@@ -10,19 +8,139 @@ import swim from '../assets/icons/person-swimming-solid.svg';
 import cycle from '../assets/icons/bicycle-solid.svg';
 import runing from '../assets/icons/person-running-solid.svg';
 import hike from '../assets/icons/person-hiking-solid.svg';
+import walk from '../assets/icons/person-walking-solid.svg';
 
 import Btn from "./Btn";
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Editactivity() {
 
-    let { id } = useParams();
-    console.log("id edit", id);
+    const { id } = useParams();
+    const Navigate = useNavigate();
+
+    const [success, setSuccess] = useState(false);
+
+    const lists = useSelector((state) => state.activity);
+    const item = lists.find((element) => element._id == id);
+    const { _id, name, description, activity, duration, date } = item;
+
+    const clearForm = () => {
+        document.getElementById("resetForm").reset();
+    }
+
+    const [aactivity, setActivity] = useState({
+        activityName: "",
+        activityDescription: "",
+        activityType: "",
+        activityTime: "",
+        activityDate: "",
+    });
+
+    const { activityDate, activityDescription, activityName, activityTime, activityType } = aactivity;
+
+    const nameHandler = (e) => {
+        setActivity({ ...aactivity, activityName: e.target.value });
+    }
+
+    const descriptHandler = (e) => {
+        setActivity({ ...aactivity, activityDescription: e.target.value });
+    }
+
+    const radioHandler = (e) => {
+        setActivity({ ...aactivity, activityType: e.target.value });
+    }
+    const timeHandler = (e) => {
+        setActivity({ ...aactivity, activityTime: e.target.value });
+    }
+    const [successA, setsuccessA] = useState(false);
     const editActivity = (e) => {
         e.preventDefault();
+        const authenticationID = localStorage.getItem('userT');
+        fetch(`http://localhost:5000/api/exercise/updateexercise/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authenticationID
+            },
+            body: JSON.stringify({
+                name: activityName,
+                description: activityDescription,
+                activity: activityType,
+                duration: activityTime
+            })
+        }).then(response => response.json())
+            .then(data => {
+                const { success } = data;
+                if (data) {
+                    clearForm();
+                    setsuccessA(true);
+                    setTimeout(() => {
+                        Navigate("/home");
+                    }, 3000);
+                }
+            })
     }
+
+    const radio = [
+        {
+            value: "running",
+            id: "run",
+            alt: "running",
+            title: "Running",
+            src: runing
+        },
+        {
+            value: "bicycle",
+            id: "bicycle",
+            alt: "bicycle",
+            title: "Bicycle Ride",
+            src: cycle
+        },
+        {
+            value: "swim",
+            id: "swim",
+            alt: "swim",
+            title: "Swimming",
+            src: swim
+        },
+        {
+            value: "hike",
+            id: "hike",
+            alt: "hiking",
+            title: "Hike",
+            src: hike
+        },
+        {
+            value: "walk",
+            id: "walk",
+            alt: "walking",
+            title: "walk",
+            src: walk
+        }
+    ]
+
+    const radioRender = radio.map((radioitem, index) => {
+        const defaultCHk = radioitem.value == activity ? true : false;
+        return (
+            <React.Fragment key={index}>
+                <input className='d-none' defaultChecked={defaultCHk} type="radio" value={radioitem.value} id={radioitem.id} name="activitytype" onChange={radioHandler} />
+                <label key={index} className='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' htmlFor={radioitem.id}><img src={radioitem.src} style={newActivity.iconsize} alt={radioitem.alt} /><span className='ms-1'>{radioitem.title}</span> </label>
+            </React.Fragment>
+        )
+    })
+
+    useEffect(() => {
+        setActivity({
+            activityName: name,
+            activityDescription: description,
+            activityType: activity,
+            activityTime: duration
+        })
+    }, [])
 
     return (
         <React.Fragment>
+
             <Menubar />
             <div className='container-fluid'>
                 <div className='row'>
@@ -35,43 +153,36 @@ export default function Editactivity() {
                                 <p>Elit aliqua exercitation aliqua sit aute.</p>
                             </div>
                         </div>
+                        {successA &&
+                            <div className='row'>
+                                <div className='col-md-6'>
+                                    <div className="alert alert-success rounded-0 border-0 fw-bold" role="alert">
+                                        Activity Update Successfully
+                                    </div>
+                                </div>
+                            </div>
+                        }
 
                         <div className='row'>
                             <div className='col-xs-12 col-md-6'>
-                                <form onSubmit={editActivity} className="mt-3">
+                                <form id="resetForm" onSubmit={editActivity} className="mt-3">
 
                                     <div className="mb-3">
-                                        <input type="text" className={globalFieldRules}
-                                            id="" placeholder="Enter name" required />
-                                        <div className="form-text text-danger text-lowercase"></div>
-                                    </div>
-
-                                    <div className="mb-3">
-                                        <textarea className='form-control border-0 rounded-0 border-bottom' placeholder="Activity description" rows={5} required></textarea>
-                                    </div>
-
-                                    <div className="mb-3 customizeRadio">
-
-                                        <input className='d-none' type="radio" value="running" id="run" name="activitytype" checked />
-                                        <label className='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' htmlFor='run'><img src={runing} style={newActivity.iconsize} alt="running" /><span className='ms-1'>Running</span></label>
-                                        <input className='d-none' type="radio" value="bicycle" id="bicycle" name="activitytype" />
-                                        <label className='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' htmlFor='bicycle'><img src={cycle} style={newActivity.iconsize} alt="bicycle" /><span className='ms-1'>Bicycle Ride</span> </label>
-                                        <input className='d-none' type="radio" value="swim" id="swim" name="activitytype" />
-                                        <label className='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' htmlFor='swim'><img src={swim} style={newActivity.iconsize} alt="bicycle" /><span className='ms-1'>swim</span> </label>
-                                        <input className='d-none' type="radio" value="walkhike" id="walkhike" name="activitytype" />
-                                        <label className='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' htmlFor='walkhike'><img src={hike} style={newActivity.iconsize} alt="bicycle" /><span className='ms-1'>walk and hike</span> </label>
+                                        <input type="text" value={activityName} className={globalFieldRules}
+                                            id="" placeholder="Enter name" onChange={nameHandler} required />
                                     </div>
 
                                     <div className="mb-3">
-                                        <input type="time" className={globalFieldRules}
-                                            id="" required />
+                                        <textarea className='form-control border-0 rounded-0 border-bottom' placeholder="Activity description" onChange={descriptHandler} rows={5} value={activityDescription} required></textarea>
+                                    </div>
+                                    <div className="mb-3 customizeRadio">{radioRender}</div>
+                                    <div className="mb-3">
+                                        <input type="number" placeholder='Time in Mins' className={globalFieldRules} value={activityTime}
+                                            id="" onChange={timeHandler} required />
                                     </div>
 
-                                    <div className="mb-3">
-                                        <input type="date" className={globalFieldRules}
-                                            id="" required />
-                                    </div>
                                     <Btn title="Edit activity" style={CustomizeUi.btn} />
+
                                 </form>
                             </div>
                         </div>

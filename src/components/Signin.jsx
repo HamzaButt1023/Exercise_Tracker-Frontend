@@ -13,11 +13,12 @@ import { useDispatch } from 'react-redux';
 import { SIGNIN } from '../redux/commonExportor';
 
 import { isEmailAddress, isPasswordValid } from './helper/validator';
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Signin() {
 
     const dispatch = useDispatch();
-
+    const naviate = useNavigate();
     const { note, btn, checkbox_label, checkbox_login, checkbox_checked } = CustomizeUi;
     const [checkedRule, setCheckedRule] = useState(CustomizeUi.checkbox_login);
     const [checked, setChecked] = useState(false);
@@ -37,6 +38,7 @@ export default function Signin() {
         passwordValue: null,
         invalidError: false
     });
+    const [success, setSuccess] = useState(false);
     const emailHandler = (e) => {
         const email = e.target.value.trim();
         if (email.length > 0) {
@@ -54,27 +56,36 @@ export default function Signin() {
         const password = e.target.value.trim();
         setfieldDetail({ ...fieldDetail, passwordValue: password })
     }
+    //Qwert!@345
     const submitSignin = (event) => {
         event.preventDefault();
         const { emailValue, passwordValue } = fieldDetail;
         if (emailValue !== null && passwordValue !== null) {
-
             fetch("http://localhost:5000/api/auth/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'auth-token' : localStorage.getItem("tokenformulaOne") 
                 },
                 body: JSON.stringify({
-                    "email": emailValue,
-                    "password": passwordValue,
+                    email: emailValue,
+                    password: passwordValue,
                 })
-            }).then(response => response.json())    
-             .then(data => {
-
-                
-                
-             })
+            }).then(response => response.json())
+                .then(data => {
+                    const {success}= data;             
+                    if ( success ){
+                        localStorage.clear();
+                        localStorage.setItem('userT', data.authtoken);
+                        setfieldDetail({ ...fieldDetail, invalidError: false })
+                        setSuccess(true);
+                        setTimeout(() => {
+                            dispatch(SIGNIN())
+                        }, 3000);
+                    }
+                    else{
+                        setfieldDetail({ ...fieldDetail, invalidError: true })
+                    }
+                })
         }
     }
     const { emailError, passwordError, invalidError } = fieldDetail;
@@ -93,10 +104,15 @@ export default function Signin() {
                             <span className="text-lowercase fs-6 fw-normal">please Enter your details</span>
 
                             {
-                                invalidError && <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">Invalid Email and Password Combination</div>
+                                success && <div className="alert alert-success rounded-0 border-0 fw-bold" role="alert">
+                                    Login successfully. Wait redirecting ...
+                                </div>
                             }
 
-
+                            {invalidError && <div className="alert alert-danger rounded-0 border-0 fw-bold" role="alert">
+                                Login Failed. Password or E-mail wrong
+                            </div>
+                            }
                             <form onSubmit={submitSignin} className="mt-3">
                                 <div className="mb-3">
                                     <input type="email" className={globalFieldRules}

@@ -9,8 +9,10 @@ import logo from '../assets/icons/logo.svg';
 import Redirectlink from "./Redirectlink";
 
 import { isEmailAddress, isPasswordValid, isAlphabatic } from './helper/validator';
+import { useNavigate } from 'react-router-dom';
 export default function Reset() {
 
+    const Navigate = useNavigate();
     const [fieldDetail, setfieldDetail] = useState({
         emailError: false,
         passwordError: false,
@@ -23,7 +25,7 @@ export default function Reset() {
         confirmPassword: null
     });
 
-
+    const [success, setSuccess] = useState(false);
     const emailHandler = (e) => {
         const email = e.target.value.trim();
         if (email.length > 0) {
@@ -59,7 +61,7 @@ export default function Reset() {
     const resetpassword = (e) => {
         e.preventDefault();
         var controllor = false;
-        const { confirmPassword, passwordValue } = fieldDetail;
+        const { confirmPassword, passwordValue, emailValue } = fieldDetail;
 
         if (confirmPassword !== passwordValue) {
             controllor = true;
@@ -70,11 +72,48 @@ export default function Reset() {
         }
 
         if (!controllor) {
-            setfieldDetail({ ...fieldDetail, emailexist: true }) // if email exist in database
+            fetch("http://localhost:5000/api/auth/resetpassword", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: emailValue
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    const { success } = data;
+                    if (!success) {
+                        setfieldDetail({ ...fieldDetail, emailexist: true })
+                    }
+                    else {
+                        fetch("http://localhost:5000/api/auth/resetpassword/newcredentials", {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: emailValue,
+                                newPassword: passwordValue,
+                                cPassword: confirmPassword
+                            })
+                        }).then(response => response.json())
+                            .then(data => {
+                                if (data.success){
+                                    setSuccess(true);
+                                    setTimeout(() => {
+                                        Navigate("/");
+                                    }, 2500);
+                                }
+                            })
+                    }
+                })
         }
     }
     const { emailError, passwordError, doesnotMatch, emailexist } = fieldDetail;
     let message = "Password must contain at least one numeric, lowercase letters, capital letters, special character and must be eight characters long";
+
+
     return (
         <React.Fragment>
             <div className="container-fluid">
@@ -85,54 +124,64 @@ export default function Reset() {
                                 <img src={logo} />
                             </div>
                             <h1 className="fw-bold fs-3 mt-2 mb-0 d-flex  text-uppercase"> Recover your password </h1>
+                            {
+                                success &&
+                                <div className='row'>
+                                    <div className='col-md-12'>
 
+                                        <div className="alert alert-success rounded-0 border-0 fw-bold" role="alert">
+                                            Password Change Successfully. Wait Redirecting..
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <form onSubmit={resetpassword} className="mt-3">
-                            {
-                                emailexist && <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">e-mail does not exist</div>
-                            }
-                            <div className="mb-3">
-                                <input type="email" className={globalFieldRules}
-                                    id="fitPrism_email" placeholder="Email address" onBlur={emailHandler} aria-describedby="emailHelp" required />
                                 {
-                                    emailError && <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">you have entered an invalid e-mail address.</div>
+                                    emailexist && <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">e-mail does not exist</div>
                                 }
-                            </div>
+                                <div className="mb-3">
+                                    <input type="email" className={globalFieldRules}
+                                        id="fitPrism_email" placeholder="Email address" onBlur={emailHandler} aria-describedby="emailHelp" required />
+                                    {
+                                        emailError && <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">you have entered an invalid e-mail address.</div>
+                                    }
+                                </div>
 
-                            <div className="row animate__animated animate__backOutLeft">
-                                <div className="col">
-                                    <div className="mb-3">
-                                        <input type="password"
-                                            className={globalFieldRules}
-                                            placeholder="Password" onBlur={passwordHandler} required />
+                                <div className="row animate__animated animate__backOutLeft">
+                                    <div className="col">
+                                        <div className="mb-3">
+                                            <input type="password"
+                                                className={globalFieldRules}
+                                                placeholder="Password" onBlur={passwordHandler} required />
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="mb-3">
+                                            <input type="password"
+                                                className={globalFieldRules}
+                                                placeholder="Confirm Password" onBlur={confirmHandler} required />
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="col">
-                                    <div className="mb-3">
-                                        <input type="password"
-                                            className={globalFieldRules}
-                                            placeholder="Confirm Password" onBlur={confirmHandler} required />
+                                {
+                                    passwordError && <div className='mb-3' style={{ maxWidth: "480px" }}>
+                                        <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">{message}</div>
                                     </div>
-                                </div>
-                            </div>
-                            {
-                                passwordError && <div className='mb-3' style={{ maxWidth: "480px" }}>
-                                    <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">{message}</div>
-                                </div>
-                            }
-                            {
-                                doesnotMatch && <div className='mb-3'>
-                                    <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">password does not match</div>
-                                </div>
-                            }
+                                }
+                                {
+                                    doesnotMatch && <div className='mb-3'>
+                                        <div className="form-text text-danger text-lowercase animate__animated animate__shakeX">password does not match</div>
+                                    </div>
+                                }
 
-                            <Btn type="submit" title="Reset Password" style={CustomizeUi.btn} />
-                        </form>
-                        <Redirectlink longtext="Already have an account?" pathAddress="/" pathTag="Login here" />
+                                <Btn type="submit" title="Reset Password" style={CustomizeUi.btn} />
+                            </form>
+                            <Redirectlink longtext="Already have an account?" pathAddress="/" pathTag="Login here" />
+                        </div>
                     </div>
+                    <Carousel />
                 </div>
-                <Carousel />
             </div>
-        </div>
         </React.Fragment >
     )
 }

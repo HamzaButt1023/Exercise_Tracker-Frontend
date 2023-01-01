@@ -90,16 +90,17 @@ export default function Signup() {
     }
 
     if (!controllor) {
+      const {nameValue,emailValue,passwordValue,confirmPassword} = fieldDetail;
       fetch("http://localhost:5000/api/auth/createUser", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: "Najeed ur Rehman",
-          email: "info@najeedurrehman.com",
-          password: "Qazwsxcd",
-          confirmPassword: "Qazwsxcd"
+          name: nameValue,
+          email: emailValue,
+          password: passwordValue,
+          confirmPassword: confirmPassword
         })
       }).then(response => response.json())
         .then(data => {
@@ -140,7 +141,7 @@ export default function Signup() {
               }
               <form onSubmit={submitSignup} className="mt-3">
                 {emailexist &&
-                  <div className="alert alert-success rounded-0 border-0 fw-bold animate__animated animate__shakeX" role="alert">
+                  <div className="alert alert-danger rounded-0 border-0 fw-bold animate__animated animate__shakeX" role="alert">
                     E-mail already exist
                   </div>
                 }

@@ -14,7 +14,7 @@ export default function Card(props) {
     const openDeleteBox = () => setDeleteCall(true);
 
     const { cardShade, date, cardIcon, cardImage } = CustomizeCard;
-    const { activityDate, activityTitle, activityDescription, activityImage } = props;
+    const { activityDate, activityTitle, activityDescription, activityImage,deleteID } = props;
     return (
         <React.Fragment>
             <div className='fitprism-card' style={cardShade}>
@@ -22,11 +22,11 @@ export default function Card(props) {
 
                     <div className='d-flex align-items-center justify-content-between'>
                         <span className='text-white d-flex justify-content-center align-items-center text-break px-2' style={date}>{activityDate}</span>
-                        <span className='ms-3 fw-bold fs-4'>{activityTitle}</span>
+                        <span className='ms-3 fw-bold fs-4 text-capitalize'>{activityTitle}</span>
                     </div>
 
                     <div className=''>
-                        <Link to={`/edit-activity/${1}`}>
+                        <Link to={`/edit-activity/${deleteID}`}>
                             <img className='me-2' style={cardIcon} src={editicon} title="Edit Your Activity" alt="Edit Icon" /></Link>
                         <img src={deleteicon} style={cardIcon} alt="Delete Icon" title="Delete Your Activity" onClick={openDeleteBox} />
                     </div>
@@ -41,7 +41,7 @@ export default function Card(props) {
                     <p className='text-justify m-0'>{activityDescription}</p>
                 </div>
             </div>
-            {deleteCall && <Delete_activity deleteId={1} closedDeleteBox={closedDeleteBox} />}
+            {deleteCall && <Delete_activity deleteId={deleteID} closedDeleteBox={closedDeleteBox} />}
 
         </React.Fragment>
     )

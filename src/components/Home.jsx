@@ -1,13 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Activitylist from './Activitylist';
 import Menubar from './Menubar';
 import Sidebar_left from './Sidebar_left';
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-
 
 export default function Home() {
-    const isLoggedIn = useSelector((state) => state.authentication.isLoggedin);
+    
     return (
         <React.Fragment>
             <Menubar />
