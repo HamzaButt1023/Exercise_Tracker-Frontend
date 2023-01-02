@@ -1,0 +1,304 @@
+:root {
+    --orange: #F15A24;
+    --black: #0C303D;
+    --gray: #868686;
+    --animate-duration: 1s;
+    --animate-delay: 1s;
+    --animate-repeat: 1;
+}
+
+* {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.fitprism-slider {
+    background-color: aqua;
+    width: 100%;
+    height: 100%;
+}
+
+.fitprism-slider>img {
+    object-fit: cover;
+}
+
+.fitprism__login>h1,
+.fitprism__login>span {
+    color: var(--black);
+}
+
+.fitprism__heading-note {
+    background: var(--orange);
+    height: 28px;
+}
+
+.fitprism__radio:checked {
+    background-color: var(--orange);
+    border: 0;
+}
+
+.fitprism__login--checklabel {
+    color: var(--gray);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.fitprism__radio {
+    border-color: var(--orange);
+}
+
+.fitprism__linktext {
+
+    font-size: 14px;
+}
+
+.carousel-indicators [data-bs-target] {
+    height: 20px !important;
+}
+
+.carousel-indicators .active {
+    background-color: var(--orange);
+}
+
+
+/* Animation */
+
+
+.animate__animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-duration: var(--animate-duration);
+    animation-duration: var(--animate-duration);
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes shakeX {
+
+    from,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translate3d(5px, 0, 0);
+        transform: translate3d(5px, 0, 0);
+    }
+}
+
+@keyframes shakeX {
+
+    from,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translate3d(5px, 0, 0);
+        transform: translate3d(5px, 0, 0);
+    }
+}
+
+.animate__shakeX {
+    -webkit-animation-name: shakeX;
+    animation-name: shakeX;
+}
+
+/* Button */
+/* Button Hover Effect */
+.fitprism-btn {
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    position: relative;
+    background: var(--orange);
+    border: 0;
+}
+
+.fitprism-btn:before {
+    content: '';
+    position: absolute;
+    border: white solid 2px;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    opacity: 0;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+}
+
+.fitprism-btn:hover:before,
+.fitprism-btn:focus:before,
+.fitprism-btn:active:before {
+    opacity: 1;
+}
+
+.forget-btn {
+    color: #0C303D;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.iconsize {
+    width: 24px;
+    height: 24px;
+}
+
+.fitprismlogo {
+    color: #F15A24;
+    font-size: 2rem;
+    height: 38px;
+    line-height: 35px;
+}
+
+.deletebg {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.confirmbtn {
+    border-color: #0C303D;
+    color: #0C303D;
+    cursor: pointer;
+}
+
+.confirmbtn:hover {
+    color: #fff;
+    background-color: #0C303D;
+}
+
+.confoirmation-text{
+    color: #0C303D;
+}
+
+.cancelbtn {
+    cursor: pointer;
+    color: #0C303D;
+}
+
+.loadmore-btn {
+    height: 50px;
+    width: 280px;
+    display: block;
+    background-color: #0C303D;
+}
+
+.sidebarbg {
+    background-color: #F15A24;
+}
+
+.sidebar-logo {
+    width: 96px;
+    height: 96px;
+}
+
+.closemenu-icon {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+}
+
+.sidebar-icon {
+    width: 48px;
+    height: 24px;
+}
+
+.cardShade {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.card-date {
+    width: 50px;
+    height: 50px;
+    background-color: #0C303D;
+}
+
+.card-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.card-image {
+    background-size: cover;
+    width: 100%;
+    height: 250px;
+}
+
+
+@media only screen and (min-width:640px) {
+    .fitprism-sidebar {
+        min-height: 100vh;
+        display: flex !important;
+    }
+}
+
+@media only screen and (max-width:640px) {
+    .fitprism-sidebar {
+        position: fixed;
+        top: 0;
+        min-height: 100vh;
+        display: none;
+    }
+
+    .fitprism-sidebar-header {
+        justify-content: space-between !important;
+    }
+}
+
+
+.customizeRadio>label {
+    cursor: pointer;
+}
+
+.customizeRadio>input:checked+label {
+    background-color: #F15A24;
+    color: white;
+    border: 0px solid transparent;
+}
+
+
+.fitprism-logo {
+    -webkit-text-stroke: 1px #fff;
+}
+
+
+.customize-nav>a {
+    color: white;
+}
+
+.customize-nav>a:hover,
+.active-link {
+    background: #F2F2F2;
+    color: #F15A24 !important;
+}
+.activity-icon{
+    width: 24px;
+    height: 24px;
+}

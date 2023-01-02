@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracking Application</title>
+    <link type="text/css" href="./public/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- End -->
+
+    <link type="text/css" href="./public/css/fitprism_style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div
+                class="col-xs-12 col-sm-5 col-md-4 col-lg-3 py-2 px-sm-3 py-sm-5 justify-content-between flex-column fitprism-sidebar sidebarbg">
+                <div class='d-flex justify-content-between flex-column'>
+
+                    <div class='d-flex justify-content-center align-items-center fitprism-sidebar-header'>
+
+                        <a href="/" class=' text-decoration-none'>
+                            <div class='d-flex justify-content-center align-items-center'>
+                                <img src="./public/icons/logo_sidebar.svg" alt="Logo"
+                                    class='fitprism-logo-icon sidebar-logo' />
+                                <span class='fw-bold ms-2 p-2 bg-white fitprism-logo fitprismlogo'>FitPrism</span>
+                            </div>
+                        </a>
+
+                        <a class='toggleBtn d-sm-none'><img class="closemenu-icon" src="./public/icons/xmark-solid.svg"
+                                alt="Closed navmenu" /></a>
+                    </div>
+
+                    <nav class='mt-5 d-flex flex-column customize-nav'>
+                        <a href="/index.html"
+                            class="text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center"><img
+                                class="sidebar-icon" src="./public/icons/list.svg" /><span>Activity List</span></a>
+
+                        <a href="./activity.html"
+                            class="text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center active-link"><img
+                                class="sidebar-icon" src="./public/icons/activity.svg" /><span>Add activity</span></a>
+                        <a href="#"
+                            class="text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center"><img
+                                class="sidebar-icon" src="./public/icons/logout.svg" /><span>Logout</span></a>
+                    </nav>
+
+                </div>
+
+                <div class='text-center text-white fw-bold border py-2'>
+                    © Fitprism | All Right Reserved
+                </div>
+
+            </div>
+            <div class='col-xs-12 col-sm-7 col-md-8 col-lg-9 px-sm-3 py-5 d-flex flex-column justify-content-center justify-content-sm-start'>
+
+                <div class='row'>
+                    <div class='col-md-12 py-3'>
+                        <h1 class='fw-bold text-capitalize'>Add new activity</h1>
+                        <p>Elit aliqua exercitation aliqua sit aute.</p>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='col-xs-12 col-md-6'>
+                        <form class="mt-3">
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control rounded-0 border-0 border-bottom ps-2 py-2 shadow-none"
+                                    id="" placeholder="Enter name" required />
+                                <div class="form-text text-danger text-lowercase"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <textarea class='form-control border-0 rounded-0 border-bottom' placeholder="Activity description" rows="5" required></textarea>
+                            </div>
+
+                            <div class="mb-3 customizeRadio">
+
+                                <input class='d-none' type="radio" value="running" id="run" name="activitytype" checked />
+
+                                <label class='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' for='run'><img src="./public/icons/person-running-solid.svg" class="activity-icon" alt="running" /><span class='ms-1'>Running</span></label>
+
+                                <input class='d-none' type="radio" value="bicycle" id="bicycle" name="activitytype" />
+
+
+                                <label class='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' for='bicycle'><img src="./public/icons/bicycle-solid.svg" class="activity-icon" alt="bicycle" /><span class='ms-1'>Bicycle Ride</span> </label>
+
+                                <input class='d-none' type="radio" value="swim" id="swim" name="activitytype" />
+                                <label class='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' for='swim'><img src="./public/icons/person-swimming-solid.svg" class="activity-icon" alt="bicycle" /><span class='ms-1'>swim</span> </label>
+
+                                <input class='d-none' type="radio" value="walkhike" id="walkhike" name="activitytype" />
+                                <label class='me-2 border px-1 py-1 text-capitalize d-inline-flex align-items-center' for='walkhike'><img src="./public/icons/person-hiking-solid.svg" class="activity-icon" alt="bicycle" /><span class='ms-1'>walk and hike</span> </label>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="text" class="form-control rounded-0 border-0 border-bottom ps-2 py-2 shadow-none" placeholder="Enter Time (In Mins)" id="" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <input type="date" class="form-control rounded-0 border-0 border-bottom ps-2 py-2 shadow-none"
+                                    id="" required />
+                            </div>
+                            
+                            <button type="submit"
+                            class="fitprism-btn text-white fw-bold fs-5 rounded-0 border-0 mx-auto w-100 py-2">Add Activity</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

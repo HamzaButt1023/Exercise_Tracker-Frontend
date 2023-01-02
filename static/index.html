@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracking Application</title>
+    <link type="text/css" href="./public/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- End -->
+
+    <link type="text/css" href="./public/css/fitprism_style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div
+                class="col-xs-12 col-sm-5 col-md-4 col-lg-3 py-2 px-sm-3 py-sm-5 justify-content-between flex-column fitprism-sidebar sidebarbg">
+                <div class='d-flex justify-content-between flex-column'>
+
+                    <div class='d-flex justify-content-center align-items-center fitprism-sidebar-header'>
+
+                        <a href="/" class=' text-decoration-none'>
+                            <div class='d-flex justify-content-center align-items-center'>
+                                <img src="./public/icons/logo_sidebar.svg" alt="Logo"
+                                    class='fitprism-logo-icon sidebar-logo' />
+                                <span class='fw-bold ms-2 p-2 bg-white fitprism-logo fitprismlogo'>FitPrism</span>
+                            </div>
+                        </a>
+
+                        <a class='toggleBtn d-sm-none'><img class="closemenu-icon" src="./public/icons/xmark-solid.svg"
+                                alt="Closed navmenu" /></a>
+                    </div>
+
+                    <nav class='mt-5 d-flex flex-column customize-nav'>
+                        <a href="/"
+                            class="text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center active-link"><img
+                                class="sidebar-icon" src="./public/icons/list.svg" /><span>Activity List</span></a>
+
+                        <a href="/"
+                            class="text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center"><img
+                                class="sidebar-icon" src="./public/icons/activity.svg" /><span>Add activity</span></a>
+                        <a href="/"
+                            class="text-decoration-none border-0 border-bottom fs-5 py-2 text-capitalize d-flex align-align-items-center"><img
+                                class="sidebar-icon" src="./public/icons/logout.svg" /><span>Logout</span></a>
+                    </nav>
+
+                </div>
+
+                <div class='text-center text-white fw-bold border py-2'>
+                    © Fitprism | All Right Reserved
+                </div>
+
+            </div>
+            <div class='col-xs-12 col-sm-7 col-md-8 col-lg-9 px-sm-3 py-sm-5'>
+
+                <div class='row'>
+                    <div class='col-md-12 py-3'>
+                        <h1 class='fw-bold'>Recently Performed Activities</h1>
+                        <p>You have performed multiple activities in last month have a look on it.</p>
+                    </div>
+                </div>
+
+
+                <div class='row gx-3 gy-3'>
+                    <div class='col-xs-6 col-md-4'>
+                        <div class='fitprism-card cardShade'>
+                            <div
+                                class='fitprism-card-header py-3 px-2 d-flex align-items-center justify-content-between'>
+
+                                <div class='d-flex align-items-center justify-content-between'>
+                                    <span
+                                        class='text-white d-flex justify-content-center align-items-center text-break px-2 card-date'>24 Apr</span>
+                                    <span class='ms-3 fw-bold fs-4'>swimming</span>
+                                </div>
+
+                                <div class=''>
+                                    <a href="/edit-activity/1">
+                                        <img class='me-2 card-icon' src="./public/icons/pen-solid.svg"
+                                            title="Edit Your Activity" alt="Edit Icon" />
+                                    </a>
+
+                                    <a href="">
+                                        <img class='me-2 card-icon' src="./public/icons/trash-can-solid.svg"
+                                            title="Delete Activity" alt="Delete Icon" />
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <div class='fitprism-card-image'>
+                                <img src="./public//images/swimming.png" alt="swimming" class="card-image" />
+                            </div>
+
+                            <div class='fitprism-description py-3 px-2'>
+                                <p class='text-justify m-0'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio harum sit consectetur quod corrupti veritatis eos accusantium asperiores, exercitationem ratione consequuntur enim deleniti ab rerum, quos libero quis suscipit ducimus?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
